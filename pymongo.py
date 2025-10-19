@@ -24,3 +24,8 @@ def dbConnect():
         print(" * MongoDB connection error:", e)
 
     return db
+
+
+if __name__ == "__main__":
+    db = dbConnect()
+    print(db)
