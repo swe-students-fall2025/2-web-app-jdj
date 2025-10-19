@@ -30,6 +30,10 @@ def create_app():
     login_manager.login_view = "login" 
     login_manager.init_app(app)
 
+    @login_manager.user_loader
+    def load_user(user_id):
+        return None
+
     # routes here
     # need to add login section and home page first
 
@@ -40,8 +44,7 @@ def create_app():
         Returns:
             rendered template (str): The rendered HTML template.
         """
-        response = make_response("hellow world")
-        response.mimetype = "text/plain"
+        response = make_response(render_template('index.html'), 200)
         return response
 
 
@@ -51,5 +54,5 @@ app = create_app()
 
 if __name__ == "__main__":
     PORT = int(os.getenv("FLASK_PORT"))
-    app.run(port=PORT, debug=True)
     print("Flask App running on port", PORT)
+    app.run(port=PORT, debug=True)
