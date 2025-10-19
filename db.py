@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 from bson.objectid import ObjectId
 
 
-def dbConnect():
+def db_connect():
     load_dotenv()
 
 
@@ -21,12 +21,12 @@ def dbConnect():
     try:
         cxn.admin.command("ping")
         print(" *", "Connected to MongoDB!")
+        return db
     except Exception as e:
         print(" * MongoDB connection error:", e)
-
-    return db
+        return None
 
 
 if __name__ == "__main__":
-    db = dbConnect()
+    db = db_connect()
     print(db)
