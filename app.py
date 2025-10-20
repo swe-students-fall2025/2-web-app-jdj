@@ -17,6 +17,7 @@ def create_app():
 
     db = database.db_connect()
 
+
     
     SECRET_KEY = os.getenv('SECRET_KEY')
 
@@ -38,7 +39,7 @@ def create_app():
     # need to add login section and home page first
 
     @app.route("/")
-    def root():
+    def index():
         """
         Route for the root page.
         Returns:
@@ -46,6 +47,14 @@ def create_app():
         """
         response = make_response(render_template('index.html'), 200)
         return response
+    
+    @app.route("/test")
+    def testDB():
+        print("dbname",db.name, flush=True)
+        print("Collections:",db.list_collection_names())
+        users = list(db.Users.find({}))
+        print("users",users)
+        return make_response(render_template("root.html", profiles=users), 200)
 
 
     return app

@@ -2,5 +2,19 @@
     <body>
         
         Hello World
+
+        <ul>
+            {% for p in profiles %}
+                <li>
+                    <div>
+                        {{p.name}}
+                    </div>
+                    <div>
+                        {{p.vibe}}
+                    </div>
+                </li>
+            {% endfor %}
+
+        </ul>
     </body>
 </html>

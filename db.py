@@ -18,13 +18,10 @@ def db_connect():
     cxn = pymongo.MongoClient(os.getenv("MONGO_URI"))
     db = cxn[os.getenv("MONGO_DBNAME")]
 
-    try:
-        cxn.admin.command("ping")
-        print(" *", "Connected to MongoDB!")
-        return db
-    except Exception as e:
-        print(" * MongoDB connection error:", e)
-        return None
+    cxn.admin.command("ping")
+    print(" *", "Connected to db:", os.getenv("MONGO_DBNAME"))
+    return db
+    
 
 
 if __name__ == "__main__":
