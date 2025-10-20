@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<header class="chat-top row between">
+  <a class="link" href="{{ url_for('home') }}">&lt; Back to home</a>
+  <div class="muted">[Profile] [Name]</div>
+  <label for="drawer-toggle" class="btn small">Menu</label>
+</header>
+<input id="drawer-toggle" class="drawer-toggle" type="checkbox" />
+<aside class="drawer">
+  <nav class="sheet">
+    <a href="{{ url_for('profile') }}">My Profile</a>
+    <a href="{{ url_for('restaurants') }}">My Restaurants</a>
+    <a href="{{ url_for('match') }}">My Matches</a>
+    <label for="drawer-toggle" class="close">Close</label>
+  </nav>
+</aside>
+
+<section class="chat-window">
+  <div class="bubble you">Lorem Ipsum</div>
+  <div class="bubble me">Lorem Ipsum</div>
+  <div class="bubble me">Lorem Ipsum</div>
+  <div class="bubble you">Lorem Ipsum</div>
+  <div class="bubble you">Lorem Ipsum</div>
+</section>
+
+<form class="chat-input row" method="post" action="#">
+  <input name="message" placeholder="[Message]" />
+  <button class="btn primary" type="submit" aria-label="Send">Send</button>
+</form>
+{% endblock %}
