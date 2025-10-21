@@ -186,9 +186,12 @@ def create_app():
                 {"cuisine": {"$regex": q, "$options": "i"}}
             ]}
         items = list(restaurants_col.find(query).sort("created_at", -1))
+        for item in items:
+            creator = str(item.get("created_by"))
+            if creator == "None" or creator == current_user.id:
+                item["can_delete"] = True
         return render_template("restaurants.html", restaurants=items, q=q)
 
-    # TODO add functionality
     @app.route("/restaurants/<rid>/delete", methods=["POST"])
     @login_required
     def delete_restaurant(rid):
@@ -200,10 +203,12 @@ def create_app():
         doc = restaurants_col.find_one({"_id": oid})
         if not doc:
             abort(404)
-        if str(doc.get("created_by")) != current_user.id:
+        creator = str(doc.get("created_by"))
+        print(creator, creator == "None", creator == current_user.id)
+        if creator != "None" and creator != current_user.id:
             abort(403)
         restaurants_col.delete_one({"_id": oid})
-        flash("Deleted.", "info")
+        flash(f"Deleted {doc.get("name")}.", "info")
         return redirect(url_for("restaurants"))
 
     # TODO add functionality

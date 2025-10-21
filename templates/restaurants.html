@@ -14,6 +14,11 @@
       <div class="card">
         {{ r.name }} - {{ r.cuisine }} - Rating: {{ r.rating }}<br>
         <em>{{ r.notes }}</em>
+        {% if r.can_delete %}
+        <form method="post" action="{{ url_for('delete_restaurant', rid=r._id) }}">
+          <button class="btn danger small" type="submit">Delete</button>
+        </form>
+        {% endif %}
       </div>
     {% endfor %}
   </div>
