@@ -167,8 +167,10 @@ def create_app():
                 restaurants_col.insert_one({
                     "name": name,
                     "cuisine": cuisine,
+                    "rating": int(request.form.get("rating")),
+                    "notes": request.form.get("notes","").strip(),
                     "created_by": ObjectId(current_user.id),
-                    "created_at": datetime.datetime.utcnow()
+                    "created_at": datetime.datetime.now()
                 })
                 flash("Restaurant added.", "success")
             else:
@@ -183,7 +185,7 @@ def create_app():
                 {"cuisine": {"$regex": q, "$options": "i"}}
             ]}
         items = list(restaurants_col.find(query).sort("created_at", -1))
-        return render_template("restaurants.html", items=items, q=q)
+        return render_template("restaurants.html", restaurants=items, q=q)
 
     @app.route("/restaurants/<rid>/delete", methods=["POST"])
     @login_required
@@ -206,8 +208,7 @@ def create_app():
     @login_required
     def chat():
         """Placeholder screen to satisfy 'six screens'—can be extended later."""
-        return render_template("chat.html"
-        )
+        return render_template("chat.html")
 
     @app.route("/match")
     @login_required

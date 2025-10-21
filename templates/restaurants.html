@@ -21,8 +21,34 @@
 </form>
 
 <section class="card hero-box">
-  <div class="placeholder tall">[ Restaurant carousel ]</div>
+  <div class="placeholder tall">
+    {% for r in restaurants %}
+      <div class="card">
+        {{ r.name }} - {{ r.cuisine }} - Rating: {{ r.rating }}<br>
+        <em>{{ r.notes }}</em>
+      </div>
+    {% endfor %}
+  </div>
 </section>
 
-<a class="btn primary block" href="#">Add restaurant</a>
+<form action="" method="post">
+  <label>Restaurant name
+    <input name="name" required>
+  </label>
+
+  <label>Restaurant cuisine
+    <input name="cuisine" required>
+  </form>
+
+  <label>Rating
+    <input type="number" name="rating" min="1" max="5" required>
+  </label>
+
+  <label>Notes
+    <textarea name="notes" placeholder="Thoughts?"></textarea>
+  </label>
+
+  <button type="submit" class="btn primary block">Add Restaurant</button>
+</form>
+
 {% endblock %}
