@@ -125,7 +125,7 @@ def create_app():
     def home():
         """Home page: show latest restaurants (DB display #1)."""
         latest = list(restaurants_col.find().sort("created_at", -1).limit(10))
-        return render_template("home.html", restaurants=latest, user=current_user if current_user.is_authenticated else None)
+        return render_template("home.html", restaurants=latest, user=current_user)
 
 
     @app.route("/profile", methods=["GET","POST"])
