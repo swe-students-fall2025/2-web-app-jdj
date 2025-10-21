@@ -219,6 +219,25 @@ def create_app():
     def match():
         return render_template("match.html")
 
+    @app.route("/load_test_data")
+    def load_test_data():
+        """
+        route to load test data into db
+        """
+
+        sample_restaurants = [
+            {"name": "Hello Saigon", "cuisine": "Viet", "rating": 4, "notes": "Great pho."},
+            {"name": "Dolar Shop", "cuisine": "Hotpot", "rating": 5, "notes": "I've actually never been lol, but I want to go."},
+        ]
+        for r in sample_restaurants:
+            restaurants_col.insert_one({
+                **r,
+                "created_by": None,
+                "created_at": datetime.datetime.now()
+            })
+
+        return redirect(url_for("home"))
+
     return app
 
 app = create_app()
