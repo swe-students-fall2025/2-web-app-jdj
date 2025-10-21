@@ -113,7 +113,6 @@ def create_app():
             return redirect(url_for("login"))
         return render_template("login.html")
 
-    # TODO cant get here yet i think
     @app.route("/logout")
     @login_required
     def logout():
