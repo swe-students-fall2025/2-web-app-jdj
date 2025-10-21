@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="auth">
+  <h1 class="brand-title">Foodies</h1>
+
+  <form method="post" class="card auth-form" autocomplete="on">
+    <label>Username
+      <input name="username" autocomplete="username" required>
+    </label>
+    <label>Password
+      <input type="password" name="password" autocomplete="current-password" required>
+    </label>
+
+    <!-- OAuth placeholders -->
+    <div class="oauth-row">
+      <button class="btn oauth" type="button">O&nbsp;auth</button>
+      <button class="btn oauth" type="button">O&nbsp;auth</button>
+      <button class="btn oauth" type="button">O&nbsp;auth</button>
+    </div>
+
+    <button type="submit" class="btn primary block">Log In</button>
+  </form>
+</section>
+{% endblock %}

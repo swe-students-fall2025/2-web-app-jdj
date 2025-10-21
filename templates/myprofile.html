@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-top row between">
+  <div class="word-logo">Foodies</div>
+  <label for="drawer-toggle" class="btn small">Menu</label>
+</section>
+
+<input id="drawer-toggle" class="drawer-toggle" type="checkbox" />
+<aside class="drawer">
+  <nav class="sheet">
+    <a href="{{ url_for('profile') }}" aria-current="page">My Profile</a>
+    <a href="{{ url_for('restaurants') }}">My Restaurants</a>
+    <a href="{{ url_for('match') }}">My Matches</a>
+    <a href="{{ url_for('profile') }}#settings">Settings</a>
+    <label for="drawer-toggle" class="close">Close</label>
+  </nav>
+</aside>
+
+<section class="card hero-box">
+  <h1>My Profile</h1>
+  <form method="post" action="{{ url_for('update_profile') }}" class="stack">
+    {% if csrf_token %}
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    {% endif %}
+
+    <div class="stack">
+      <label>Cuisines Preferred</label>
+      <input type="text" name="cuisines" placeholder="e.g. Italian, Japanese" value="{{ current_user.cuisines or '' }}">
+    </div>
+
+    <div class="stack">
+      <label>Dietary Restrictions</label>
+      <input type="text" name="dietary" placeholder="e.g. Vegetarian, Gluten-free" value="{{ current_user.dietary or '' }}">
+    </div>
+
+    <div class="stack">
+      <label>Budget</label>
+      <input type="text" name="budget" placeholder="e.g. $$" value="{{ current_user.budget or '' }}">
+    </div>
+
+    <div class="stack">
+      <label>Vibe</label>
+      <input type="text" name="vibe" placeholder="e.g. Casual, Romantic" value="{{ current_user.vibe or '' }}">
+    </div>
+
+    <div class="stack">
+      <label>Distance (miles)</label>
+      <input type="number" name="distance" min="1" max="50" value="{{ current_user.distance or 10 }}">
+    </div>
+
+    <div class="stack">
+      <label>Payment Preference</label>
+      <input type="text" name="payment" placeholder="e.g. Split, I’ll pay" value="{{ current_user.payment or '' }}">
+    </div>
+
+    <div class="row between">
+      <a class="btn" href="{{ url_for('home') }}">Cancel</a>
+      <button class="btn primary" type="submit">Save</button>
+    </div>
+  </form>
+</section>
+{% endblock %}

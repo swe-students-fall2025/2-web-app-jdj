@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="card hero-box">
+  <div class="placeholder tall">[ Profile ]</div>
+</section>
+
+<section class="card">
+  <div class="placeholder">You Both Like: [ Food Category ]</div>
+</section>
+
+<div class="row around cta-row">
+  <a class="btn" href="{{ url_for('home') }}">Home</a>
+  <a class="btn primary" href="{{ url_for('chat') }}">Chat!</a>
+</div>
+{% endblock %}

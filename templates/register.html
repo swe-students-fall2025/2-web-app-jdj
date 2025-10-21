@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="auth">
+  <h1 class="brand-title">Foodies</h1>
+
+  <form method="post" class="card auth-form" autocomplete="on">
+    <label>Username
+      <input name="username" autocomplete="username" required>
+    </label>
+    <label>Password
+      <input type="password" name="password" autocomplete="new-password" required>
+    </label>
+
+    <p class="muted small">
+      Already a user? <a href="{{ url_for('login') }}">Sign in.</a>
+    </p>
+
+    <!-- OAuth placeholders (wire up later if you add providers) -->
+    <div class="oauth-row">
+      <button class="btn oauth" type="button">O&nbsp;auth</button>
+      <button class="btn oauth" type="button">O&nbsp;auth</button>
+      <button class="btn oauth" type="button">O&nbsp;auth</button>
+    </div>
+
+    <button type="submit" class="btn primary block">Sign up</button>
+  </form>
+</section>
+{% endblock %}
