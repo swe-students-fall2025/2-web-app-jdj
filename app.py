@@ -113,6 +113,7 @@ def create_app():
             return redirect(url_for("login"))
         return render_template("login.html")
 
+    # TODO cant get here yet i think
     @app.route("/logout")
     @login_required
     def logout():
@@ -127,7 +128,7 @@ def create_app():
         latest = list(restaurants_col.find().sort("created_at", -1).limit(10))
         return render_template("home.html", restaurants=latest, user=current_user)
 
-
+    # TODO check if working
     @app.route("/profile", methods=["GET","POST"])
     @login_required
     def profile():
@@ -187,6 +188,7 @@ def create_app():
         items = list(restaurants_col.find(query).sort("created_at", -1))
         return render_template("restaurants.html", restaurants=items, q=q)
 
+    # TODO add functionality
     @app.route("/restaurants/<rid>/delete", methods=["POST"])
     @login_required
     def delete_restaurant(rid):
@@ -204,12 +206,14 @@ def create_app():
         flash("Deleted.", "info")
         return redirect(url_for("restaurants"))
 
+    # TODO add functionality
     @app.route("/chat")
     @login_required
     def chat():
         """Placeholder screen to satisfy 'six screens'—can be extended later."""
         return render_template("chat.html")
 
+    # TODO add functionality
     @app.route("/match")
     @login_required
     def match():
