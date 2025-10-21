@@ -4,16 +4,22 @@ A little exercise to build a web application following an agile development proc
 
 ## Product vision statement
 
-See instructions. Delete this line and place the Product Vision Statement here.
+**Foodies** allows users to connect with food and food lovers.
 
 ## User stories
 
-See instructions. Delete this line and place a link to the user stories here.
+[Issues](https://github.com/swe-students-fall2025/2-web-app-jdj/issues)
 
 ## Steps necessary to run the software
 
-See instructions. Delete this line and place instructions to download, configure, and run the software here.
+1. Clone the project from ```GitHub```.
+2. Install the dependencies from the [pipfile](pipfile) using ```pipenv shell```.
+3. Configure your ```MongoDB``` database.
+4. Configure the necessary environment variables in a ```.env``` based on [the example](env.example).
+5. Run the project using ```py ./app.py```.
 
 ## Task boards
 
-See instructions. Delete this line and place a link to the task boards here.
+[Sprint 1](https://github.com/orgs/swe-students-fall2025/projects/45/views/1)
+
+[Sprint 2](https://github.com/orgs/swe-students-fall2025/projects/76/views/1)
