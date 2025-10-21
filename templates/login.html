@@ -11,6 +11,11 @@
       <input type="password" name="password" autocomplete="current-password" required>
     </label>
 
+
+    <p class="muted small">
+      Not a user? <a href="{{ url_for('login') }}">Register here.</a>
+    </p>
+
     <!-- OAuth placeholders -->
     <div class="oauth-row">
       <button class="btn oauth" type="button">O&nbsp;auth</button>

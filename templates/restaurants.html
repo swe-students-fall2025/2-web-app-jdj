@@ -1,19 +1,7 @@
 {% extends 'base.html' %}
+{% block title %}My Restaurants - Foodies{% endblock %}
 {% block content %}
-<header class="row between">
-  <a class="link" href="{{ url_for('home') }}">&lt; Back to home</a>
-  <span class="muted">Restaurants</span>
-  <label for="drawer-toggle" class="btn small">Menu</label>
-</header>
-<input id="drawer-toggle" class="drawer-toggle" type="checkbox" />
-<aside class="drawer">
-  <nav class="sheet">
-    <a href="{{ url_for('profile') }}">My Profile</a>
-    <a href="{{ url_for('restaurants') }}">My Restaurants</a>
-    <a href="{{ url_for('match') }}">My Matches</a>
-    <label for="drawer-toggle" class="close">Close</label>
-  </nav>
-</aside>
+
 
 <form class="row" method="get" action="{{ url_for('restaurants') }}">
   <input name="q" placeholder="Search restaurant.." value="{{ request.args.get('q','') }}">
@@ -21,8 +9,39 @@
 </form>
 
 <section class="card hero-box">
-  <div class="placeholder tall">[ Restaurant carousel ]</div>
+  <div class="placeholder tall">
+    {% for r in restaurants %}
+      <div class="card">
+        {{ r.name }} - {{ r.cuisine }} - Rating: {{ r.rating }}<br>
+        <em>{{ r.notes }}</em>
+        {% if r.can_delete %}
+        <form method="post" action="{{ url_for('delete_restaurant', rid=r._id) }}">
+          <button class="btn danger small" type="submit">Delete</button>
+        </form>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
 </section>
 
-<a class="btn primary block" href="#">Add restaurant</a>
+<form action="" method="post">
+  <label>Restaurant name
+    <input name="name" required>
+  </label>
+
+  <label>Restaurant cuisine
+    <input name="cuisine" required>
+  </form>
+
+  <label>Rating
+    <input type="number" name="rating" min="1" max="5" required>
+  </label>
+
+  <label>Notes
+    <textarea name="notes" placeholder="Thoughts?"></textarea>
+  </label>
+
+  <button type="submit" class="btn primary block">Add Restaurant</button>
+</form>
+
 {% endblock %}

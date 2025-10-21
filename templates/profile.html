@@ -1,27 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
-<header class="row between">
-  <a class="link" href="{{ url_for('home') }}">&lt; Back to home</a>
-  <span class="muted">Profile</span>
-  <label for="drawer-toggle" class="btn small">Menu</label>
-</header>
-<input id="drawer-toggle" class="drawer-toggle" type="checkbox" />
-<aside class="drawer">
-  <nav class="sheet">
-    <a href="{{ url_for('profile') }}">My Profile</a>
-    <a href="{{ url_for('restaurants') }}">My Restaurants</a>
-    <a href="{{ url_for('match') }}">My Matches</a>
-    <label for="drawer-toggle" class="close">Close</label>
-  </nav>
-</aside>
 
 <form class="card" method="post" action="#">
   <label>Edit name
-    <input name="display_name" value="{{ current_user.username if current_user.is_authenticated else '' }}">
+    <input name="display_name" value="{{ current_user.username if current_user.is_authenticated else 'Could not find name' }}">
   </label>
 
   <div class="placeholder tall">[ edit food preferences ]</div>
 
   <button class="btn primary" type="submit">Save</button>
 </form>
+
+<a href="{{ url_for('logout') }}">Logout</a>
 {% endblock %}

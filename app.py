@@ -65,11 +65,9 @@ def create_app():
     # ---------------------- ROUTES ----------------------
 
     @app.route("/")
-    def home():
-        """Home page: show latest restaurants (DB display #1)."""
-        latest = list(restaurants_col.find().sort("created_at", -1).limit(10))
-        return render_template("home.html", restaurants=latest, user=current_user if current_user.is_authenticated else None)
-
+    def root():
+        return render_template("index.html")
+    
     @app.route("/register", methods=["GET", "POST"])
     def register():
         """Create user (Add)."""
@@ -122,6 +120,14 @@ def create_app():
         flash("Logged out.", "info")
         return redirect(url_for("home"))
 
+    @app.route("/home")
+    @login_required
+    def home():
+        """Home page: show latest restaurants (DB display #1)."""
+        latest = list(restaurants_col.find().sort("created_at", -1).limit(10))
+        return render_template("home.html", restaurants=latest, user=current_user)
+
+    # TODO check if working
     @app.route("/profile", methods=["GET","POST"])
     @login_required
     def profile():
@@ -161,8 +167,10 @@ def create_app():
                 restaurants_col.insert_one({
                     "name": name,
                     "cuisine": cuisine,
+                    "rating": int(request.form.get("rating")),
+                    "notes": request.form.get("notes","").strip(),
                     "created_by": ObjectId(current_user.id),
-                    "created_at": datetime.datetime.utcnow()
+                    "created_at": datetime.datetime.now()
                 })
                 flash("Restaurant added.", "success")
             else:
@@ -177,7 +185,11 @@ def create_app():
                 {"cuisine": {"$regex": q, "$options": "i"}}
             ]}
         items = list(restaurants_col.find(query).sort("created_at", -1))
-        return render_template("restaurants.html", items=items, q=q)
+        for item in items:
+            creator = str(item.get("created_by"))
+            if creator == "None" or creator == current_user.id:
+                item["can_delete"] = True
+        return render_template("restaurants.html", restaurants=items, q=q)
 
     @app.route("/restaurants/<rid>/delete", methods=["POST"])
     @login_required
@@ -190,23 +202,45 @@ def create_app():
         doc = restaurants_col.find_one({"_id": oid})
         if not doc:
             abort(404)
-        if str(doc.get("created_by")) != current_user.id:
+        creator = str(doc.get("created_by"))
+        print(creator, creator == "None", creator == current_user.id)
+        if creator != "None" and creator != current_user.id:
             abort(403)
         restaurants_col.delete_one({"_id": oid})
-        flash("Deleted.", "info")
+        flash(f"Deleted {doc.get("name")}.", "info")
         return redirect(url_for("restaurants"))
 
+    # TODO add functionality
     @app.route("/chat")
     @login_required
     def chat():
         """Placeholder screen to satisfy 'six screens'—can be extended later."""
-        return render_template("chat.html"
-        )
+        return render_template("chat.html")
 
+    # TODO add functionality
     @app.route("/match")
     @login_required
     def match():
         return render_template("match.html")
+
+    @app.route("/load_test_data")
+    def load_test_data():
+        """
+        route to load test data into db
+        """
+
+        sample_restaurants = [
+            {"name": "Hello Saigon", "cuisine": "Viet", "rating": 4, "notes": "Great pho."},
+            {"name": "Dolar Shop", "cuisine": "Hotpot", "rating": 5, "notes": "I've actually never been lol, but I want to go."},
+        ]
+        for r in sample_restaurants:
+            restaurants_col.insert_one({
+                **r,
+                "created_by": None,
+                "created_at": datetime.datetime.now()
+            })
+
+        return redirect(url_for("home"))
 
     return app
 

@@ -131,3 +131,11 @@ label { display: flex; flex-direction: column; gap: 6px; font-size: 0.95rem; }
 /* ====== Utilities if needed ====== */
 .hidden { display: none !important; }
 .center { text-align: center; }
+
+
+.flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
