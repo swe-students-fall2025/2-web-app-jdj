@@ -1,21 +1,8 @@
 {% extends 'base.html' %}
+{% block title %}Home - Foodies{% endblock %}
 {% block content %}
-<section class="page-top row between">
-  <div class="word-logo">Foodies</div>
-  <!-- Drawer toggle (no JS needed) -->
-  <label for="drawer-toggle" class="btn small">Menu</label>
-</section>
 
-<input id="drawer-toggle" class="drawer-toggle" type="checkbox" />
-<aside class="drawer">
-  <nav class="sheet">
-    <a href="{{ url_for('profile') }}">My Profile</a>
-    <a href="{{ url_for('restaurants') }}">My Restaurants</a>
-    <a href="{{ url_for('match') }}">My Matches</a>
-    <a href="{{ url_for('profile') }}#settings">Settings</a>
-    <label for="drawer-toggle" class="close">Close</label>
-  </nav>
-</aside>
+
 
 <section class="card hero-box">
   <div class="placeholder tall">
@@ -23,7 +10,7 @@
       <p>No restaurants found.</p>
     {% else %}
     {% for r in restaurants %}
-    <!-- <a href="{{ url_for('restaurant')}}"></a> -->
+    <!-- <a href="{{ url_for('restaurants')}}"></a> -->
      <!-- maybe make them clickable to make your own review -->
     <div class="card">
         {{ r.name }} - {{ r.cuisine }} - Rating: {{ r.rating }}<br>

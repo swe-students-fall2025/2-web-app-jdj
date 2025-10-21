@@ -17,11 +17,13 @@
 
 <form class="card" method="post" action="#">
   <label>Edit name
-    <input name="display_name" value="{{ current_user.username if current_user.is_authenticated else '' }}">
+    <input name="display_name" value="{{ current_user.username if current_user.is_authenticated else 'Could not find name' }}">
   </label>
 
   <div class="placeholder tall">[ edit food preferences ]</div>
 
   <button class="btn primary" type="submit">Save</button>
 </form>
+
+<a href="{{ url_for('logout') }}">Logout</a>
 {% endblock %}

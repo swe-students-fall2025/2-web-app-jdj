@@ -1,0 +1,20 @@
+<header class="page-top row between">
+    {% if request.endpoint != 'home' %}
+    <a class="link" href="{{ url_for('home') }}">&lt; Back to home</a>
+    {% else %}
+    <div class="word-logo">Foodies</div>
+    {% endif %}
+    <!-- Drawer toggle (no JS needed) -->
+    <label for="drawer-toggle" class="btn small">Menu</label>
+</header>
+
+<input id="drawer-toggle" class="drawer-toggle" type="checkbox" />
+<aside class="drawer">
+    <nav class="sheet">
+        <a href="{{ url_for('profile') }}">My Profile</a>
+        <a href="{{ url_for('restaurants') }}">My Restaurants</a>
+        <a href="{{ url_for('match') }}">My Matches</a>
+        <a href="{{ url_for('profile') }}#settings">Settings</a>
+        <label for="drawer-toggle" class="close">Close</label>
+    </nav>
+</aside>
