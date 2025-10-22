@@ -178,12 +178,27 @@ def create_app():
             return redirect(url_for("restaurants"))
 
         q = request.args.get("q","").strip()
-        query = {}
+        filters = []
         if q:
-            query = {"$or": [
-                {"name": {"$regex": q, "$options": "i"}},
-                {"cuisine": {"$regex": q, "$options": "i"}}
-            ]}
+            filters.append({
+                "$or": [
+                    {"name": {"$regex": q, "$options": "i"}},
+                    {"cuisine": {"$regex": q, "$options": "i"}}
+                ]
+            })
+
+        mine = request.args.get("mine", type=bool)
+
+        if mine:
+            filters.append({
+                "$or": [
+                    {"created_by": ObjectId(current_user.id)},
+                    {"created_by": None}
+                ]
+            })
+
+        query = {"$and": filters} if filters else {}
+
         items = list(restaurants_col.find(query).sort("created_at", -1))
         for item in items:
             creator = str(item.get("created_by"))
@@ -236,7 +251,7 @@ def create_app():
         for r in sample_restaurants:
             restaurants_col.insert_one({
                 **r,
-                "created_by": None,
+                "created_by": ObjectId(current_user.id) if current_user.is_authenticated else None,
                 "created_at": datetime.datetime.now()
             })
 
