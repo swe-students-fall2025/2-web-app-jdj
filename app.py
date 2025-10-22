@@ -125,6 +125,9 @@ def create_app():
     def home():
         """Home page: show latest restaurants (DB display #1)."""
         latest = list(restaurants_col.find().sort("created_at", -1).limit(10))
+        for item in latest:
+            if ObjectId(current_user.id) in item.get("liked_by", []):
+                item["liked"] = True
         return render_template("home.html", restaurants=latest, user=current_user)
 
     # TODO check if working
