@@ -5,6 +5,12 @@
 
 <form class="row" method="get" action="{{ url_for('restaurants') }}">
   <input name="q" placeholder="Search restaurant.." value="{{ request.args.get('q','') }}">
+  <label>
+    <input type="checkbox" name="mine" id="" value="True" 
+            {% if request.args.get('mine') == 'True' %}checked{% endif %}
+            onchange="this.form.submit()">
+    See only my restaurants.
+  </label>
   <button class="btn" type="submit">Search</button>
 </form>
 
