@@ -1,15 +1,36 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<form class="card" method="post" action="#">
-  <label>Edit name
-    <input name="display_name" value="{{ current_user.username if current_user.is_authenticated else 'Could not find name' }}">
-  </label>
+<div class="column between gap">
 
-  <div class="placeholder tall">[ edit food preferences ]</div>
+  <div class="card column between">
+    <div class="font-weight:700"><h3>{{user.display_name}}</h3></div>
+    <div>
+      <div>Username: {{user.username}}</div>
+      <div>Member since: {{user.created_at}}</div>
+      <div>Favorite restaurant: {{user.favorite_restaurant}}</div>
+      <div>Food preferences: {{user.food_preferences}}</div>
+    </div>
+  </div>
+  
+  <form class="card" method="post" action="">
+    <label>Edit name
+      <input name="display_name" placeholder="{{ user.display_name }}">
+    </label>
+  
+    <label>Edit Favorite Restaurant
+      <input name="favorite_restaurant" placeholder="{{ user.favorite_restaurant }}">
+    </label>
 
-  <button class="btn primary" type="submit">Save</button>
-</form>
+    <label>Edit Food Preferences
+      <input name="food_preferences" placeholder="{{ user.food_preferences }}">
+    </label>
+
+
+    <button class="btn primary" type="submit">Save</button>
+  </form>
+</div>
+
 
 <a href="{{ url_for('logout') }}">Logout</a>
 {% endblock %}

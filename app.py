@@ -137,17 +137,26 @@ def create_app():
             if new_display:
                 users_col.update_one({"_id": ObjectId(current_user.id)}, {"$set": {"display_name": new_display}})
                 flash("Profile updated.", "success")
-            new_pw = request.form.get("new_password","")
-            if new_pw:
-                users_col.update_one(
-                    {"_id": ObjectId(current_user.id)},
-                    {"$set": {"password": make_password_record(new_pw)}}
-                )
-                flash("Password changed.", "success")
+            # new_pw = request.form.get("new_password","")
+            # if new_pw:
+            #     users_col.update_one(
+            #         {"_id": ObjectId(current_user.id)},
+            #         {"$set": {"password": make_password_record(new_pw)}}
+            #     )
+            #     flash("Password changed.", "success")
+            new_fav_rest = request.form.get("favorite_restaurant","").strip()
+            if new_fav_rest:
+                users_col.update_one({"_id": ObjectId(current_user.id)}, {"$set": {"favorite_restaurant": new_fav_rest}})
+                flash("Favorite restaurant updated.", "success")
+
+            new_cuisine_pref = request.form.get("food_preferences","").strip()
+            if new_cuisine_pref:
+                users_col.update_one({"_id": ObjectId(current_user.id)}, {"$set": {"food_preferences": new_cuisine_pref}})
+                flash("Cuisine preference updated.", "success")
             return redirect(url_for("profile"))
 
         doc = users_col.find_one({"_id": ObjectId(current_user.id)})
-        return render_template("profile.html", userdoc=doc)
+        return render_template("profile.html", user=doc)
 
     @app.route("/restaurants", methods=["GET","POST"])
     @login_required
