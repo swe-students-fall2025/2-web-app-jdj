@@ -194,6 +194,35 @@ def create_app():
                 item["can_delete"] = True
         return render_template("restaurants.html", restaurants=items, q=q)
 
+
+    @app.route("/restaurants/<rid>/like", methods=["POST"])
+    @login_required
+    def like_restaurant(rid):
+        oid = ObjectId(rid)
+        doc = restaurants_col.find_one({"_id": oid})
+        if not doc:
+            abort(404)
+
+        restaurants_col.update_one(
+            {"_id": oid},
+            {"$addToSet": {"liked_by": ObjectId(current_user.id)}}
+        )
+        return redirect(url_for("home"))
+    
+    @app.route("/restaurants/<rid>/unlike", methods=["POST"])
+    @login_required
+    def unlike_restaurant(rid):
+        oid = ObjectId(rid)
+        doc = restaurants_col.find_one({"_id": oid})
+        if not doc:
+            abort(404)
+
+        restaurants_col.update_one(
+            {"id": oid},
+            {"$pull": {"liked_by": ObjectId(current_user.id)}}
+        )
+        return redirect(url_for("home"))
+
     @app.route("/restaurants/<rid>/delete", methods=["POST"])
     @login_required
     def delete_restaurant(rid):
