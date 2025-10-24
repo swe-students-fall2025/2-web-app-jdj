@@ -15,6 +15,17 @@
     <div class="card">
         {{ r.name }} - {{ r.cuisine }} - Rating: {{ r.rating }}<br>
         <em>{{ r.notes }}</em>
+        <div class="row between">
+          {% if r.liked %}
+          <form action="{{url_for('unlike_restaurant', rid=r._id)}}" method="post">
+            <button class="" type="submit">Unlike</button>
+          </form>  
+          {% else %}
+          <form action="{{url_for('like_restaurant', rid=r._id)}}" method="post">
+            <button class="" type="submit">Like</button>
+          {% endif %}
+          <div>Likes: {{ r.liked_by|length }}</div>
+        </div>
       </div>
     {% endfor %}
     {% endif %}
